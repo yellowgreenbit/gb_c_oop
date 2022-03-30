@@ -19,7 +19,7 @@ public:
 
     //Copy constructor
     Cat(Cat& c)
-        : name(c.name), color(c.color), age(c.age) {}
+            : name(c.name), color(c.color), age(c.age) {}
 
     ~Cat(){
         std::cout << "Cat left us..." << std::endl;
