@@ -74,8 +74,11 @@ public:
     }
 
     string pop() {
-        string removedEl;
+        if(stackLength == 0){
+            return "Array is empty";
+        }
 
+        string removedEl;
         removedEl = to_string(stackArray[stackLength]);
         stackArray[stackLength] = 0;
         stackLength--;
