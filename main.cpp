@@ -1,103 +1,130 @@
 #include <iostream>
+#include <cmath>
 
-class Cat {
-    int age;
-    mutable std::string name;
-    std::string color;
+using namespace std;
 
+// Task 1
+
+class Power {
+    int mass = 2;
+    int speed = 3;
 public:
-    Cat() : age(0) {
-        color = "Peachy";
-        std::cout << " MEOW" << std::endl;
-    };
-
-    Cat(std::string name, std::string color, int age) {
-        this->name = name;
-        this->color = color;
-        this->age = age;
+    void set(int mass, int speed) {
+        this->mass = mass;
+        this->speed = speed;
     }
 
-    //Copy constructor
-    Cat(Cat& c)
-        : name(c.name), color(c.color), age(c.age) {}
-
-    ~Cat(){
-        std::cout << "Cat left us..." << std::endl;
-    }
-
-    void voice(){
-        std::cout << name << " meow" << std::endl;
-    }
-
-    void move(){
-        std::cout << name << " walks on paws" << std::endl;
-    }
-
-    void setAge(int a){
-        age = a;
-    }
-
-    void setName(std::string n) const {
-        name = n;
-    }
-
-    void const setColor(std::string n){
-        color = n;
-    }
-
-    int getAge(){
-        return age;
-    }
-
-    std::string getName(){
-        return name;
-    }
-
-    std::string getColor(){
-        return color;
-    }
-
-    void info() {
-        printf("%s is %s and %d years of age\n", name.c_str(), color.c_str(), age);
+    void calculate(){
+        cout << pow(mass, speed) << endl;
     }
 };
 
-void makeCatMove(Cat* c){
-    (*c).move();
-}
 
-void makeCatMove(Cat& c){
-    c.move();
-}
+// Task 2
+
+class RGBA {
+    uint8_t m_red = 0;
+    uint8_t m_green = 0;
+    uint8_t m_blue = 0;
+    uint8_t m_alpha = 255;
+
+public:
+    RGBA(uint8_t m_red, uint8_t m_green, uint8_t m_blue, uint8_t m_alpha) {
+        this->m_red = m_red;
+        this->m_green = m_green;
+        this->m_blue = m_blue;
+        this->m_alpha = m_alpha;
+    }
+
+    void print() {
+        cout
+        << to_string(m_red) << " "
+        << to_string(m_green) << " "
+        << to_string(m_blue) << " "
+        << to_string(m_alpha) <<
+        endl;
+    }
+};
+
+
+// Task 3
+
+class Stack {
+    int stackLength = 0;
+    int stackArray[10];
+    int maxLength = 10;
+
+public:
+    void reset() {
+        for (int i = 0; i < maxLength; i++) {
+            stackArray[i] = 0;
+        }
+        stackLength = 0;
+    }
+
+    bool push(int n) {
+        if(stackLength == maxLength){
+            return false;
+        }
+
+        stackArray[stackLength] = n;
+        stackLength++;
+
+        return true;
+    }
+
+    string pop() {
+        string removedEl;
+
+        removedEl = to_string(stackArray[stackLength]);
+        stackArray[stackLength] = 0;
+        stackLength--;
+
+        return removedEl;
+    }
+
+    void print() {
+        for (int i = 0; i < stackLength; i++) {
+            cout << stackArray[i] << " ";
+        }
+        cout << endl;
+    }
+
+};
+
 
 int main() {
-    // classes vs objects
-    Cat c0("Barsik", "White", 5);
 
-    c0.info();
+    // Task 1
+    Power pw;
 
-    Cat c1("Murzik", "Black", 2);
+    pw.calculate();
 
-    c1.info();
-//    c0.setAge(2);
-//    c0.setName("Murzik");
-//    c0.setColor("Black");
+    pw.set(3, 3);
+    pw.calculate();
 
-    c0.voice();
-    c0.move();
+    // Task 2
+    RGBA pixel(22, 231, 26, 28);
 
-    Cat c2;
-    c2.setName("Kotik");
-    c2.info();
+    pixel.print();
 
-    Cat* c2p = &c2;
+    // Task 3
+    Stack stack;
 
-    c2p->setName("pointer");
-    c2.info();
+    stack.reset();
+    stack.print();
 
-    Cat c4(c1);
-    c4.info();
+    stack.push(3);
+    stack.push(7);
+    stack.push(5);
+    stack.print();
 
-    //std::cout << "Hello, World!" << std::endl;
+    stack.pop();
+    stack.print();
+
+    stack.pop();
+    stack.pop();
+    stack.print();
+
     return 0;
 }
