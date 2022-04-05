@@ -21,6 +21,7 @@ public:
     void info() {
         printf("%s is %s and %d years of age\n", name.c_str(), color.c_str(), age);
     }
+    void voice(){ std::cout << name << " meow" << std::endl; }
 };
 
 
@@ -50,7 +51,7 @@ public:
         this->flyHeight = flyHeight;
     }
     virtual ~Bird(){ std::cout << "Bird left us..." << std::endl; }
-    void voice(){ std::cout << name << " tweet" << std::endl; }
+    void voice(){}
 };
 
 class Parrot : public Bird/*, public Cat*/{
@@ -62,5 +63,7 @@ public:
 
 
 int main() {
+
+
     return 0;
 }
