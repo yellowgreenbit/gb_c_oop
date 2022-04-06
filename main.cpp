@@ -1,6 +1,293 @@
 #include <iostream>
+#include <math.h>
+
+// Task 1
+
+class IFigure {
+public:
+    // pure virtual
+    virtual float calculateArea() const = 0;
+};
 
 
+class Circle : public IFigure {
+protected:
+    float radius;
+public:
+    Circle(float radius) {
+        setRadius(radius);
+    }
+
+    void setRadius(const float length) {
+        this->radius = length;
+    }
+
+    float getRadius() const {
+        return radius;
+    }
+
+    float calculateArea() const override {
+        return M_PI * pow(radius, 2);
+    }
+
+    virtual ~Circle() {
+        std::cout << "Circle has been destroyed..." << std::endl;
+    }
+};
+
+class Parallelogram : public IFigure {
+protected:
+    uint16_t sideAB, sideBC, height; // opposite sides are equals
+public:
+    Parallelogram(const uint16_t sideAB, const uint16_t sideBC, const uint16_t height){
+        setSideAB(sideAB);
+        setSideBC(sideBC);
+        setHeight(height);
+    }
+
+    void setSideAB(const uint16_t length) {
+        this->sideAB = length;
+    }
+
+    void setSideBC(const uint16_t length) {
+        this->sideBC = length;
+    }
+
+    void setHeight(const uint16_t length) {
+        this->height = length;
+    }
+
+    uint16_t getsideAB() const {
+        return this->sideAB;
+    }
+
+    uint16_t getSideBC() const {
+        return this->sideBC;
+    }
+
+    uint16_t getHeight() const {
+        return this->height;
+    }
+
+    float calculateArea() const override {
+        return sideBC * height;
+    }
+
+    ~Parallelogram() {
+        std::cout << "Parallelogram has been destroyed..." << std::endl;
+    }
+};
+
+class Rectangle : public Parallelogram {
+public:
+    Rectangle(uint16_t sideAB, uint16_t sideBC) : Parallelogram(sideAB, sideBC, sideAB) {}
+
+    // equal parent function, but such a task condition
+    float calculateArea() const override {
+        return sideAB * sideBC;
+    }
+
+    virtual ~Rectangle() {
+        std::cout << "Rectangle has been destroyed..." << std::endl;
+    }
+};
+
+class Square : public Parallelogram {
+public:
+    Square(uint16_t sideAB, uint16_t sideBC) : Parallelogram(sideAB, sideBC, sideAB) {}
+
+    // equal parent function, but such a task condition
+    float calculateArea() const override {
+        return sideAB * sideBC;
+    }
+
+    virtual ~Square() {
+        std::cout << "Square has been destroyed..." << std::endl;
+    }
+};
+
+class Rhombus : public Parallelogram {
+public:
+    Rhombus(uint16_t sideAB, uint16_t sideBC, uint16_t height) : Parallelogram(sideAB, sideBC, height) {}
+
+    virtual ~Rhombus() {
+        std::cout << "Rhombus has been destroyed..." << std::endl;
+    }
+
+    // equal parent function, but such a task condition
+    float calculateArea() const override {
+        return sideBC * height;
+    }
+};
+
+
+// Task 2
+
+class Car {
+private:
+    std::string company, model;
+public:
+    Car(const std::string company, const std::string model) {
+        this->company = company;
+        this->model = model;
+        std::cout << "Car is ready..." << std::endl;
+    }
+
+    void setCompany(const std::string company) {
+        this->company = company;
+    }
+
+    void setModel(const std::string model) {
+        this->model = model;
+    }
+
+    std::string getCompany() const {
+        return company;
+    }
+
+    std::string getModel() const {
+        return model;
+    }
+
+    void print() {
+        std::cout << "Car model is " << model
+        << "and company did it is " << company
+        << std::endl;
+    }
+
+    ~Car() {
+        std::cout << "Car is unmounted..." << std::endl;
+    }
+};
+
+class PassengerCar : public Car {
+public:
+    PassengerCar(std::string company, std::string model) : Car(company, model) {
+        std::cout << "PassengerCar is ready..." << std::endl;
+    }
+
+    virtual ~PassengerCar() {
+        std::cout << "PassengerCar is unmounted..." << std::endl;
+    }
+};
+
+class Bus : public Car {
+public:
+    Bus(std::string company, std::string model) : Car(company, model) {
+        std::cout << "Bus is ready..." << std::endl;
+    }
+
+    virtual ~Bus() {
+        std::cout << "Bus is unmounted..." << std::endl;
+    }
+};
+
+class Minivan : public PassengerCar, public Bus {
+public:
+    Minivan(std::string company, std::string model) : PassengerCar(company, model), Bus(company, model) {
+        std::cout << "Minivan is ready..." << std::endl;
+    }
+    virtual ~Minivan(){
+        std::cout << "Minivan is unmounted..." << std::endl;
+    }
+};
+
+
+// Task 3
+// Создать класс: Fraction (дробь). Дробь имеет числитель и знаменатель (например, 3/7 или 9/2). Предусмотреть, чтобы знаменатель не был равен 0. Перегрузить:
+//математические бинарные операторы (+, -, *, /) для выполнения действий с дробями
+//унарный оператор (-)
+//логические операторы сравнения двух дробей (==, !=, <, >, <=, >=).
+//
+//Примечание: Поскольку операторы < и >=, > и <= — это логические противоположности, попробуйте перегрузить один через другой.
+//
+//Продемонстрировать использование перегруженных операторов.
+
+class Fraction {
+private:
+    uint8_t numerator, denominator;
+public:
+    Fraction(const uint8_t numerator, const uint8_t denominator) {
+        if (!denominator) {
+            std::cout << "ERROR! Denominator must be greater than 0" << std::endl;
+            exit(-1);
+        }
+        setNumerator(numerator);
+        setDenominator(denominator);
+    }
+
+    void setNumerator(const uint8_t value) {
+        this->numerator = value;
+    }
+
+    void setDenominator(const uint8_t value) {
+        this->denominator = value;
+    }
+
+    uint8_t getNumerator() const {
+        return this->numerator;
+    }
+
+    uint8_t getDenominator() const {
+        return this->denominator;
+    }
+
+    float getFloatFraction() const {
+        return static_cast < float > (numerator) / static_cast < float > (denominator);
+    }
+
+    ~Fraction() {
+        std::cout << "Fraction is removed" << std::endl;
+    }
+
+    friend float operator+ (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() + second.getFloatFraction();
+    }
+
+    friend float operator- (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() - second.getFloatFraction();
+    }
+
+    friend float operator* (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() * second.getFloatFraction();
+    }
+
+    friend float operator/ (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() / second.getFloatFraction();
+    }
+
+    friend float operator- (const Fraction &first) {
+        return -first.getFloatFraction();
+    }
+
+    friend bool operator== (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() == second.getFloatFraction();
+    }
+
+    friend bool operator!= (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() != second.getFloatFraction();
+    }
+
+    friend bool operator< (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() < second.getFloatFraction();
+    }
+
+    friend bool operator> (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() > second.getFloatFraction();
+    }
+
+    friend bool operator<= (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() <= second.getFloatFraction();
+    }
+
+    friend bool operator>= (const Fraction &first, const Fraction &second) {
+        return first.getFloatFraction() >= second.getFloatFraction();
+    }
+};
+
+
+
+/*
 //pastebin
 //interface
 class IAnimal {
@@ -85,16 +372,64 @@ public:
     void voice() override { std::cout << name << " tweet" << std::endl; }
 };
 
-class Parrot : public Bird/*, public Cat*/{
+class Parrot : public Bird{
 public:
     Parrot(std::string name, std::string color, int age, int height) : Bird(name, color, age, height) {}
     virtual ~Parrot(){ std::cout << "Parrot left us..." << std::endl; }
     void speak() { std::cout << "polly wanna cracker" << std::endl; }
 };
-
+*/
 
 int main() {
 
+    //Task 1
+/*
+    Circle c0(2);
+
+    Parallelogram p0(2,3,2);
+
+    Square square0(4,5);
+
+    Rhombus rhombus0(3,2,5);
+
+    Rectangle rect0(7,4);
+
+    IFigure* figures[] = {&c0, &p0, &square0, &rhombus0, &rect0};
+
+    for (int i = 0; i < 5; ++i) {
+        std::cout << figures[i]->calculateArea() << std::endl;
+    }
+
+    // Task 2
+
+    Bus bus("PAZ","Pazik");
+    PassengerCar car("VAZ","Lada");
+
+    car.print();
+
+    Minivan minivan("GAZ","Galelle");
+
+    //minivan.print(); //Non-static member 'print' found in multiple base-class subobjects of type 'Car'
+
+
+*/
+    // Task 3
+    Fraction fr1(4,2);
+    Fraction fr2(6,3);
+
+    std::cout << fr1 + fr2 << std::endl;
+    std::cout << fr1 - fr2 << std::endl;
+    std::cout << fr1 * fr2 << std::endl;
+    std::cout << fr1 / fr2 << std::endl;
+    std::cout << -fr1 << std::endl;
+    std::cout << (fr1 == fr2) << std::endl;
+    std::cout << (fr1 != fr2) << std::endl;
+    std::cout << (fr1 < fr2) << std::endl;
+    std::cout << (fr1 > fr2) << std::endl;
+    std::cout << (fr1 <= fr2) << std::endl;
+    std::cout << (fr1 >= fr2) << std::endl;
+
+/*
     //Animal a0("Amoba", "Gray", 1);
 
     Cat c0("Barsik", "Black", 2);
@@ -114,6 +449,6 @@ int main() {
 
     Cat c2("Cat", "Orange", 1);
     std::cout << c2 << std::endl;
-
+*/
     return 0;
 }
