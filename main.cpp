@@ -194,14 +194,6 @@ public:
 
 
 // Task 3
-// Создать класс: Fraction (дробь). Дробь имеет числитель и знаменатель (например, 3/7 или 9/2). Предусмотреть, чтобы знаменатель не был равен 0. Перегрузить:
-//математические бинарные операторы (+, -, *, /) для выполнения действий с дробями
-//унарный оператор (-)
-//логические операторы сравнения двух дробей (==, !=, <, >, <=, >=).
-//
-//Примечание: Поскольку операторы < и >=, > и <= — это логические противоположности, попробуйте перегрузить один через другой.
-//
-//Продемонстрировать использование перегруженных операторов.
 
 class Fraction {
 private:
@@ -286,112 +278,88 @@ public:
 };
 
 
+// Task 4
 
-/*
-//pastebin
-//interface
-class IAnimal {
-public:
-// pure virtual function
-    virtual void voice() = 0;
-    virtual void move() = 0;
-    virtual void info() const = 0;
+enum Suit {
+    DIAMOND,
+    HEART,
+    CLUB,
+    SPADE
 };
 
-//abstract class
-class Animal : public IAnimal{
-protected:
-    int age;
-    std::string name;
-    std::string color;
+enum CardValue {
+    ACE = 1,
+    TWO = 2,
+    THREE = 2,
+    FOUR = 4,
+    FIVE = 5,
+    SIX = 6,
+    SEVEN = 7,
+    EIGHT = 8,
+    NINE = 9,
+    TEN = 10,
+    JACK = 10,
+    QUEEN = 10,
+    KING = 10,
+};
+
+class Card {
+private:
+    Suit _cardSuit;
+    CardValue _cardValue;
+    bool _opened = false;
 public:
-    Animal(std::string name, std::string color, int age) {
-        this->name = name;
-        this->color = color;
-        this->age = age;
+    Card(Suit suit, CardValue value){
+        this->_cardSuit = suit;
+        this->_cardValue = value;
+        this->_opened = false;
     }
 
-    ~Animal(){
-        std::cout << "Animal left us..." << std::endl;
+    void setSuit(Suit const value) {
+        this->_cardSuit = value;
     }
 
-    void move() override { std::cout << name << " walks on paws" << std::endl; }
-    void info() const override { printf("%s is %s and %d years of age\n", name.c_str(), color.c_str(), age); }
-
-    //overloading
-    friend std::ostream& operator<< (std::ostream &s, const Animal &a);
-
-    //Animal& operator+(const Animal &al, const Animal &ar){
-        //return new Animal();
-    //}
-};
-
-std::ostream& operator<< (std::ostream &s, const Animal &a){
-    s << "Animal " << a.name
-    << " of color " << a.color
-    << " and " << a.age << " year of age";
-    return s;
-}
-
-
-class Cat : public Animal{
-public:
-    Cat(std::string name, std::string color, int age) : Animal(name, color, age) {}
-
-    virtual ~Cat(){ std::cout << "Cat left us..." << std::endl; }
-    void voice() override { std::cout << name << " meow" << std::endl; }
-};
-
-class Snake : public Animal{
-public:
-    Snake(std::string name, std::string color, int age) : Animal(name, color, age) {}
-
-    virtual ~Snake(){ std::cout << "Snake left us..." << std::endl; }
-    void voice() override { std::cout << name << " shshsh" << std::endl; }
-    void move() override { std::cout << name << " crawls" << std::endl; }
-};
-
-
-class Dog : public Animal{
-public:
-    Dog(std::string name, std::string color, int age) : Animal(name, color, age) {}
-
-    virtual ~Dog(){ std::cout << "Dog left us..." << std::endl; }
-    void voice() override { std::cout << name << " woof" << std::endl; }
-};
-
-
-class Bird : public Animal{
-protected:
-    int flyHeight;
-public:
-    Bird(std::string name, std::string color, int age, int flyHeight) : Animal(name, color, age) {
-        this->flyHeight = flyHeight;
+    void setValue(CardValue const value) {
+        this->_cardValue = value;
     }
-    virtual ~Bird(){ std::cout << "Bird left us..." << std::endl; }
-    void voice() override { std::cout << name << " tweet" << std::endl; }
-};
 
-class Parrot : public Bird{
-public:
-    Parrot(std::string name, std::string color, int age, int height) : Bird(name, color, age, height) {}
-    virtual ~Parrot(){ std::cout << "Parrot left us..." << std::endl; }
-    void speak() { std::cout << "polly wanna cracker" << std::endl; }
+    void setOpened(bool const open) {
+        this->_opened = open;
+    }
+
+    Suit getSuit() const {
+        return this->_cardSuit;
+    }
+
+    CardValue getValue() const {
+        return this->_cardValue;
+    }
+
+    bool getOpened() const {
+        return this->_opened;
+    }
+
+    void flip() {
+        setOpened(!getOpened());
+    }
+
+    void print() {
+        std::cout << "Card suit: " << _cardSuit << ", card value: " << _cardValue << ", card is open: " << _opened << std::endl;
+    }
+
+    ~Card() {
+        std::cout << "Card has been removed" << std::endl;
+    }
 };
-*/
 
 int main() {
 
     //Task 1
-/*
+
     Circle c0(2);
-
     Parallelogram p0(2,3,2);
-
     Square square0(4,5);
-
     Rhombus rhombus0(3,2,5);
-
     Rectangle rect0(7,4);
 
     IFigure* figures[] = {&c0, &p0, &square0, &rhombus0, &rect0};
@@ -399,6 +367,7 @@ int main() {
     for (int i = 0; i < 5; ++i) {
         std::cout << figures[i]->calculateArea() << std::endl;
     }
+
 
     // Task 2
 
@@ -412,8 +381,8 @@ int main() {
     //minivan.print(); //Non-static member 'print' found in multiple base-class subobjects of type 'Car'
 
 
-*/
     // Task 3
+
     Fraction fr1(4,2);
     Fraction fr2(6,3);
 
@@ -429,26 +398,16 @@ int main() {
     std::cout << (fr1 <= fr2) << std::endl;
     std::cout << (fr1 >= fr2) << std::endl;
 
-/*
-    //Animal a0("Amoba", "Gray", 1);
 
-    Cat c0("Barsik", "Black", 2);
-    Cat c1("Tuzik", "Gray", 3);
-    Dog d0("Sharik", "White", 4);
-    Dog d1("Bobik", "Blue", 1);
-    Bird b0("Chijik", "Yellow", 1, 5);
-    Parrot p1("Polly", "Green", 2, 3);
-    Snake s1("Kaa", "Brown", 10);
+   // Task 4
 
-    IAnimal * zoo[] = {&c0, &c1, &d0, &d1, &b0, &p1, &s1};
-    for (int i = 0; i < 7; i++) {
-        zoo[i]->info();
-        zoo[i]->move();
-        zoo[i]->voice();
-    }
+    Card myCard(Suit::CLUB, CardValue::FOUR);
 
-    Cat c2("Cat", "Orange", 1);
-    std::cout << c2 << std::endl;
-*/
+    myCard.print();
+    myCard.flip();
+    myCard.print();
+    std::cout << myCard.getSuit() << std::endl;
+    std::cout << myCard.getValue() << std::endl;
+
     return 0;
 }
