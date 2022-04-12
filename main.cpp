@@ -212,10 +212,10 @@ int main()
     Pair1<int> p1(6, 9);
     cout << "Pair: " << p1.getFirst() << ' ' << p1.getSecond() << '\n';
 
-// Task 1
     const Pair1<double> p2(3.4, 7.8);
     cout << "Pair: " << p2.getFirst() << ' ' << p2.getSecond() << '\n';
 
+// Task 2
     const Pair<double> p3(3, 7.8);
     cout << "Pair: " << p3.getFirst() << ' ' << p3.getSecond() << '\n';
 
