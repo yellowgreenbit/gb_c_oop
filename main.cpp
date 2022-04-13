@@ -3,7 +3,9 @@
 
 using namespace std;
 
+
 // Task 1
+
 template <class T>
 class Pair1{
 private:
@@ -52,7 +54,9 @@ public:
     ~Pair() { }
 };
 
+
 // Task 3
+
 template <class T>
 class Pair{
 private:
@@ -74,9 +78,9 @@ public:
 };
 
 template <class T>
-class StringValuePair : public Pair<int>{
+class StringValuePair : public Pair<T>{
 public:
-    StringValuePair(const string& _first, const T& _second) : Pair<int>(_first, _second) { }
+    StringValuePair(const string& _first, const T& _second) : Pair<T>(_first, _second) { }
     virtual ~StringValuePair(){ }
 };
 
@@ -224,9 +228,11 @@ int main()
     StringValuePair<int> svp("Amazing", 7);
     cout << "Pair: " << svp.getFirst() << ' ' << svp.getSecond() << '\n';
 
+    StringValuePair<float> svp2("Amazing", 7.3);
+    cout << "Pair: " << svp2.getFirst() << ' ' << svp2.getSecond() << '\n';
+
 
 // Task 4
-
     Player player1("Petr");
 
     Card card1(DIAMONDS, FOUR);
