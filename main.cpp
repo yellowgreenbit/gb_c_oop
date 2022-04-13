@@ -9,7 +9,7 @@ class Pair1{
 private:
     T *data;
 public:
-    Pair1(T _first, T _second) {
+    Pair1(const T& _first, const T& _second) {
         this->data = new T(2);
 
         this->data[0] = _first;
@@ -33,25 +33,24 @@ public:
 
 // Task 2
 
-template <class T>
+template <class T1, class T2>
 class Pair{
 private:
-    T first;
-    T second;
+    T1 first;
+    T2 second;
 public:
-    Pair(T _first, T _second) : first(_first), second(_second) { }
+    Pair(const T1& _first, const T2& _second) : first(_first), second(_second){ }
 
-    T getFirst () const {
+    T1 getFirst () const {
         return first;
     }
 
-    T getSecond () const {
+    T2 getSecond () const {
         return second;
     }
 
     ~Pair() { }
 };
-
 
 // Task 3
 template <class T>
@@ -61,7 +60,7 @@ private:
     T second;
 public:
     Pair(){}
-    Pair(string _first, T _second) : first(_first), second(_second) { }
+    Pair(const string& _first, const T& _second) : first(_first), second(_second) { }
 
     string getFirst () const {
         return first;
@@ -76,10 +75,9 @@ public:
 
 template <class T>
 class StringValuePair : public Pair<int>{
-    string first;
-    T second;
 public:
-    StringValuePair(string _first, T _second) : Pair<int>(_first, _second) { }
+    StringValuePair(const string& _first, const T& _second) : Pair<int>(_first, _second) { }
+    virtual ~StringValuePair(){ }
 };
 
 
@@ -216,8 +214,11 @@ int main()
     cout << "Pair: " << p2.getFirst() << ' ' << p2.getSecond() << '\n';
 
 // Task 2
-    const Pair<double> p3(3, 7.8);
-    cout << "Pair: " << p3.getFirst() << ' ' << p3.getSecond() << '\n';
+    Pair<int, double> p1(6, 7.8);
+    cout << "Pair: " << p1.getFirst() << ' ' << p1.getSecond() << '\n';
+
+    const Pair<double, int> p2(3.4, 5);
+    cout << "Pair: " << p2.getFirst() << ' ' << p2.getSecond() << '\n';
 
 // Task 3
     StringValuePair<int> svp("Amazing", 7);
