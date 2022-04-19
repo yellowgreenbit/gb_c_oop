@@ -115,6 +115,9 @@ public:
         return cardCollection.size();
     }
     void clear() {
+        for (int i = 0; i < cardCollection.size(); i++) {
+            delete [] cardCollection[i];
+        }
         cardCollection.clear();
     }
     int calcSum(bool soft) {
